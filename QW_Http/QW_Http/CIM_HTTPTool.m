@@ -7,6 +7,7 @@
 //
 
 #import "CIM_HTTPTool.h"
+#import "AFNetworking.h"
 #import "QW_TokenUnit.h"
 #define HTTPTimeout 20.0
 
