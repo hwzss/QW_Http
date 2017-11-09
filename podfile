@@ -1,0 +1,7 @@
+platform :ios,'8.0'
+
+target 'QW_Http' do
+
+pod 'AFNetworking'
+
+end
