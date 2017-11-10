@@ -76,6 +76,18 @@ typedef void (^RequestConnectfailure)(BOOL *isShowErrorAlert);
     connectfailure:(void (^)(BOOL *isShowErrorAlert))connectfailure;
 
 
+/**
+ *  发送post请求，带安全机制,超时时间为默认时间，弃用！
+ *
+ *  @param URLString     url
+ *  @param setParameters 设置请求参数回调
+ *  @param success       成功回调
+ *  @param failure       失败回调
+ */
++(void)CIM_POST_2:(NSString *)URLString
+       parameters: (void(^)(NSMutableDictionary *params))setParameters
+          success:(void (^)(NSURLSessionDataTask * task, id responseObject))success
+          failure:(void (^)(NSURLSessionDataTask * task, NSError * error))failure __attribute__((deprecated("弃用")));
 
 /**
  带图片上传的请求
