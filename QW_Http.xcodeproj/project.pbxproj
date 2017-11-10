@@ -18,6 +18,7 @@
 		7E4133D41FB42C3200DE530B /* CIM_HTTPTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E4133D31FB42C3200DE530B /* CIM_HTTPTool.m */; };
 		7E4133E01FB4317900DE530B /* QW_TokenUnit.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E4133DF1FB4317900DE530B /* QW_TokenUnit.m */; };
 		7E4133E31FB435CC00DE530B /* NSDate+Net.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E4133E21FB435CC00DE530B /* NSDate+Net.m */; };
+		7E4133E61FB5862F00DE530B /* QW_ApiResponseParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E4133E51FB5862F00DE530B /* QW_ApiResponseParser.m */; };
 		AC1A7229E4465E4EE7D4B655 /* libPods-QW_Http.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 10A799655927933B40FBBAC5 /* libPods-QW_Http.a */; };
 /* End PBXBuildFile section */
 
@@ -64,6 +65,8 @@
 		7E4133DF1FB4317900DE530B /* QW_TokenUnit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QW_TokenUnit.m; sourceTree = "<group>"; };
 		7E4133E11FB435CC00DE530B /* NSDate+Net.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Net.h"; sourceTree = "<group>"; };
 		7E4133E21FB435CC00DE530B /* NSDate+Net.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Net.m"; sourceTree = "<group>"; };
+		7E4133E41FB5862F00DE530B /* QW_ApiResponseParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QW_ApiResponseParser.h; sourceTree = "<group>"; };
+		7E4133E51FB5862F00DE530B /* QW_ApiResponseParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QW_ApiResponseParser.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -164,6 +167,8 @@
 				7E4133D31FB42C3200DE530B /* CIM_HTTPTool.m */,
 				7E4133DE1FB4317900DE530B /* QW_TokenUnit.h */,
 				7E4133DF1FB4317900DE530B /* QW_TokenUnit.m */,
+				7E4133E41FB5862F00DE530B /* QW_ApiResponseParser.h */,
+				7E4133E51FB5862F00DE530B /* QW_ApiResponseParser.m */,
 				7E4133E11FB435CC00DE530B /* NSDate+Net.h */,
 				7E4133E21FB435CC00DE530B /* NSDate+Net.m */,
 			);
@@ -377,6 +382,7 @@
 				7E4133E31FB435CC00DE530B /* NSDate+Net.m in Sources */,
 				7E4133E01FB4317900DE530B /* QW_TokenUnit.m in Sources */,
 				7E4133A61FB42C0500DE530B /* ViewController.m in Sources */,
+				7E4133E61FB5862F00DE530B /* QW_ApiResponseParser.m in Sources */,
 				7E4133A31FB42C0500DE530B /* AppDelegate.m in Sources */,
 				7E4133A01FB42C0500DE530B /* main.m in Sources */,
 				7E4133D41FB42C3200DE530B /* CIM_HTTPTool.m in Sources */,

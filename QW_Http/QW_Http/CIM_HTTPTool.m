@@ -9,6 +9,7 @@
 #import "CIM_HTTPTool.h"
 #import "AFNetworking.h"
 #import "QW_TokenUnit.h"
+#import "QW_ApiResponseParser.h"
 #define HTTPTimeout 20.0
 
 @implementation QW_ImageData
@@ -124,24 +125,17 @@ constructingBodyWithBlock:(void (^)(id <AFMultipartFormData> formData))block
    [self CIM_UploadFile:URLString RequestSerializer:nil parameters:setParameters constructingBodyWithBlock:block progress:nil success:^(NSURLSessionDataTask *task, id responseObject) {
 //       [MBProgressHUD hideHUD];
        
-       if ([[responseObject objectForKey:@"status"]isEqualToString:@"SUCCESS"]) {
-           //请求成功直接将字典中的数据返回
-           if (success) {
-               success([responseObject objectForKey:@"data"]);
-           }
-           
-       }else{
-           //请求到了，但是返回错误
-           if([[responseObject objectForKey:@"status"] isEqualToString:@"err"]){
-               if (failure) {
-                   failure([responseObject objectForKey:@"errInfo"]);
-               }
+       QW_ApiResponseParser *parser = [QW_ApiResponseParser QW_Parser:responseObject];
+       if (parser) {
+           if (parser.resp_success) {
+               !success?:success(parser.resp_jsonData);
            }else{
-               if (failure) {
-                   failure(@"发送未知错误");
-               }
+               !failure?:failure(parser.resp_erroStr);
            }
+       }else{
+           !failure?:failure(@"本地解析失败");
        }
+       
    } failure:^(NSURLSessionDataTask *task, NSError *error) {
        
 //       [MBProgressHUD hideHUD];
@@ -348,26 +342,18 @@ RequestSerializer:(void(^)(AFHTTPRequestSerializer *aRequestSerializer,AFHTTPSes
     
     [self CIM_POST_22:URLString RequestSerializer:requestSerializer parameters:setParameters success:^(NSURLSessionDataTask *task, id responseObject) {
 //        [MBProgressHUD hideHUD];
-        
-        if ([[responseObject objectForKey:@"status"]isEqualToString:@"SUCCESS"]) {
-            //请求成功直接将字典中的数据返回
-            if (success) {
-                success([responseObject objectForKey:@"data"]);
-            }
-            
-        }else{
-            //请求到了，但是返回错误
-            if([[responseObject objectForKey:@"status"] isEqualToString:@"err"]){
-                if (failure) {
-                    failure([responseObject objectForKey:@"errInfo"]);
-                }
-            }else{
 
-                if (failure) {
-                    failure(@"发送未知错误,本地解析失败");
-                }
+        QW_ApiResponseParser *parser = [QW_ApiResponseParser QW_Parser:responseObject];
+        if (parser) {
+            if (parser.resp_success) {
+                !success?:success(parser.resp_jsonData);
+            }else{
+                !failure?:failure(parser.resp_erroStr);
             }
+        }else{
+            !failure?:failure(@"本地解析失败");
         }
+        
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         
 //        [MBProgressHUD hideHUD];
