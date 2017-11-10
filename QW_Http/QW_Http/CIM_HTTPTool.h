@@ -16,6 +16,18 @@ typedef void(^SetParametersBlock)(NSMutableDictionary *params);
 typedef void(^RequestSuccess)(id jsonData);
 typedef void (^RequestError)(NSString *errorStr);
 typedef void (^RequestConnectfailure)(BOOL *isShowErrorAlert);
+
+
+@interface QW_ImageData : NSObject
+
+@property(strong, nonatomic) NSData *imageData;
+@property(copy,nonatomic)NSString *name;
+@property(copy,nonatomic)NSString *fileName;
+@property(copy,nonatomic)NSString *mimiType;
+
++(instancetype )imageData:(NSData *)data Name:(NSString *)name fileName:(NSString *)fileName mimeType:(NSString *)mimeType;
+@end
+
 @interface CIM_HTTPTool : NSObject
 
 
@@ -80,8 +92,27 @@ typedef void (^RequestConnectfailure)(BOOL *isShowErrorAlert);
                        ImageS:(NSMutableArray *)images
                       success:(void (^)(id jsonData))success
                       failure:(void (^)(NSString *errorStr))failure
-               connectfailure:(void (^)(BOOL *isShowErrorAlert))connectfailure;
+               connectfailure:(void (^)(BOOL *isShowErrorAlert))connectfailure  __attribute__((deprecated("使用V3版本。这里面的参数被写死了")));
 
+
+
+
+/**
+ 带图片上传的请求
+
+ @param URLString 借口地址
+ @param setParameters 参数
+ @param block 对图片数据进行配置，数组中需要时QW_IMageData类模型
+ @param success 成功
+ @param failure 失败
+ @param connectfailure 连接失败
+ */
++(void)CIM_UploadImagesFileV3:(NSString *)URLString
+                   parameters: (void(^)(NSMutableDictionary *params))setParameters
+    constructingBodyWithBlock:(void(^)(NSMutableArray<QW_ImageData *> *imageModels))block
+                      success:(void (^)(id jsonData))success
+                      failure:(void (^)(NSString *errorStr))failure
+               connectfailure:(void (^)(BOOL *isShowErrorAlert))connectfailure;
 @end
 
 

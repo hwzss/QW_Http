@@ -11,6 +11,19 @@
 #import "QW_TokenUnit.h"
 #define HTTPTimeout 20.0
 
+@implementation QW_ImageData
+
++(instancetype )imageData:(NSData *)data Name:(NSString *)name fileName:(NSString *)fileName mimeType:(NSString *)mimeType{
+    QW_ImageData *imageData = [[QW_ImageData alloc]init];
+    imageData.imageData = data;
+    imageData.fileName = fileName;
+    imageData.name = name;
+    imageData.mimiType = mimeType;
+    return  imageData;
+}
+
+@end
+
 @implementation CIM_HTTPTool
 
 /**
@@ -37,6 +50,32 @@
 
 
 #pragma -mark 新版
+/**
+ 带图片上传的请求
+ 
+ @param URLString 接口地址
+ @param setParameters 参数
+ @param images 图片数组
+ @param success 成功
+ @param failure 失败
+ @param connectfailure 链接失败
+ */
++(void)CIM_UploadImagesFileV3:(NSString *)URLString
+                   parameters: (void(^)(NSMutableDictionary *params))setParameters
+    constructingBodyWithBlock:(void(^)(NSMutableArray<QW_ImageData *> *imageModels))block
+                      success:(void (^)(id jsonData))success
+                      failure:(void (^)(NSString *errorStr))failure
+               connectfailure:(void (^)(BOOL *isShowErrorAlert))connectfailure{
+    
+    NSMutableArray *imageDatas = [NSMutableArray new];
+    !block?:block(imageDatas);
+    [self CIM_UploadImagesFile:URLString parameters:setParameters constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+        [imageDatas enumerateObjectsUsingBlock:^(QW_ImageData *imageData, NSUInteger idx, BOOL * _Nonnull stop) {
+            [formData appendPartWithFileData:imageData.imageData name:imageData.name fileName:imageData.fileName mimeType:imageData.mimiType];
+        }];
+        
+    } success:success failure:failure connectfailure:connectfailure];
+}
 
 /**
  带图片上传的请求
@@ -49,20 +88,21 @@
  @param connectfailure 链接失败
  */
 +(void)CIM_UploadImagesFileV2:(NSString *)URLString
-                 parameters: (void(^)(NSMutableDictionary *params))setParameters
-  ImageS:(NSMutableArray *)images
-                    success:(void (^)(id jsonData))success
-                    failure:(void (^)(NSString *errorStr))failure
-             connectfailure:(void (^)(BOOL *isShowErrorAlert))connectfailure{
+                   parameters: (void(^)(NSMutableDictionary *params))setParameters
+                       ImageS:(NSMutableArray *)images
+                      success:(void (^)(id jsonData))success
+                      failure:(void (^)(NSString *errorStr))failure
+               connectfailure:(void (^)(BOOL *isShowErrorAlert))connectfailure{
     [self CIM_UploadImagesFile:URLString parameters:setParameters constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
         for (int i = 0; i < images.count; i++) {
             UIImage *aImage=images[i];
             NSData *data=UIImageJPEGRepresentation(aImage, 0.6);
             [formData appendPartWithFileData:data name:[NSString stringWithFormat:@"photos"] fileName:[NSString stringWithFormat:@"image%d",i] mimeType:@"image/png"];
         }
-
+        
     } success:success failure:failure connectfailure:connectfailure];
 }
+
 /**
  上传图片接口
 
