@@ -14,12 +14,13 @@
     if (![responseObj isKindOfClass:[NSDictionary class]]) {
         return nil;
     }
+    
     QW_ApiResponseParser *parser = [[QW_ApiResponseParser alloc]init];
+    
     if ([[responseObj objectForKey:@"status"]isEqualToString:@"SUCCESS"]) {
         //请求成功
         parser.resp_success = YES;
         parser.resp_jsonData = [responseObj objectForKey:@"data"];
-        
     }else{
         //请求到了，但是返回错误
         if([[responseObj objectForKey:@"status"] isEqualToString:@"err"]){
@@ -29,6 +30,7 @@
             NSLog(@"返回结果格式,本地解析失败");
         }
     }
+    
     return parser;
 }
 @end
