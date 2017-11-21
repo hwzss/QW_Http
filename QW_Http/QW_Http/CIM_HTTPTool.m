@@ -12,6 +12,8 @@
 #import "QW_ApiResponseParser.h"
 #define HTTPTimeout 20.0
 
+static id _instance;
+
 @implementation QW_fileData
 
 +(instancetype )fileData:(NSData *)data Name:(NSString *)name fileName:(NSString *)fileName mimeType:(NSString *)mimeType{
@@ -27,6 +29,12 @@
 
 @implementation CIM_HTTPTool
 
++(instancetype )Afn_manger{
+    if (!_instance) {
+        _instance = [AFHTTPSessionManager manager];
+    }
+    return _instance;
+}
 /**
  *  GET请求
  *
@@ -36,7 +44,7 @@
  *  @param failure   请求失败时的回调
  */
 +(void)Cim_GET:(NSString *)URLString Parameters:(id)params Success:(successBlock)success Failure:(failureBlock)failure{
-    AFHTTPSessionManager *magr=[AFHTTPSessionManager manager];
+    AFHTTPSessionManager *magr=[self Afn_manger];
     magr.requestSerializer.timeoutInterval=HTTPTimeout;
     [magr GET:URLString parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if (success) {
@@ -150,7 +158,7 @@ constructingBodyWithBlock:(void (^)(id <AFMultipartFormData> formData))block
            success:(void (^)(NSURLSessionDataTask * task, id responseObject))success
               failure:(void (^)(NSURLSessionDataTask * task, NSError * error))failure{
     
-    AFHTTPSessionManager *mgr=[AFHTTPSessionManager manager];
+    AFHTTPSessionManager *mgr=[self Afn_manger];
     if (requestSerializer) {
         requestSerializer(mgr.requestSerializer,mgr);
     }
@@ -235,7 +243,7 @@ RequestSerializer:(void(^)(AFHTTPRequestSerializer *aRequestSerializer,AFHTTPSes
            failure:(void (^)(NSURLSessionDataTask * task, NSError * error))failure{
     
     
-    AFHTTPSessionManager *magr=[AFHTTPSessionManager manager];
+    AFHTTPSessionManager *magr=[self Afn_manger];
     
     //设置请求的 特殊设置
     if(requestSerializer){
@@ -332,7 +340,7 @@ RequestSerializer:(void(^)(AFHTTPRequestSerializer *aRequestSerializer,AFHTTPSes
 {
     
     [self CIM_POST_22:URLString RequestSerializer:requestSerializer parameters:setParameters success:^(NSURLSessionDataTask *task, id responseObject) {
-//        [MBProgressHUD hideHUD];
+
 
         QW_ApiResponseParser *parser = [QW_ApiResponseParser QW_Parser:responseObject];
         if (parser) {
@@ -347,14 +355,14 @@ RequestSerializer:(void(^)(AFHTTPRequestSerializer *aRequestSerializer,AFHTTPSes
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         
-//        [MBProgressHUD hideHUD];
+
         BOOL isShowAlert=NO;
         
         if(connectfailure){
             connectfailure(&isShowAlert);
         }
         if (isShowAlert) {
-//            [MBProgressHUD showSingleMessage:@"网络错误,连接失败"];
+            //弹框显示网络错误
         }
 
     }];
