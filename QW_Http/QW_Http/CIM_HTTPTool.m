@@ -31,7 +31,8 @@ static id _instance;
 
 +(instancetype )Afn_manger{
     if (!_instance) {
-        _instance = [AFHTTPSessionManager manager];
+        AFHTTPSessionManager *mgr = [AFHTTPSessionManager manager];
+        mgr.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/plain"];
     }
     return _instance;
 }
