@@ -33,6 +33,7 @@ static id _instance;
     if (!_instance) {
         AFHTTPSessionManager *mgr = [AFHTTPSessionManager manager];
         mgr.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/plain"];
+        _instance = mgr;
     }
     return _instance;
 }
