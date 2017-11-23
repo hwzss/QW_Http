@@ -32,7 +32,12 @@ static id _instance;
 +(instancetype )Afn_manger{
     if (!_instance) {
         AFHTTPSessionManager *mgr = [AFHTTPSessionManager manager];
-        mgr.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/plain"];
+        if (mgr.responseSerializer.acceptableContentTypes) {
+            NSMutableSet *acceptableContentTypes = [NSMutableSet setWithSet:mgr.responseSerializer.acceptableContentTypes];
+            !acceptableContentTypes?:[acceptableContentTypes addObjectsFromArray:@[@"application/json", @"text/json", @"text/javascript",@"text/plain",@"text/html"]];
+        }else{
+            mgr.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/plain",@"text/html", nil];
+        }
         _instance = mgr;
     }
     return _instance;
