@@ -4,4 +4,5 @@ target 'QW_Http' do
 
 pod 'AFNetworking'
 
+pod 'MBProgressHUD' , '0.8'
 end
