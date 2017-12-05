@@ -11,7 +11,6 @@
 #import "QW_TokenUnit.h"
 #import "QW_ApiResponseParser.h"
 
-#import "MBProgressHUD+QW.h"
 #define HTTPTimeout 20.0
 
 static id _instance;
@@ -131,7 +130,7 @@ constructingBodyWithBlock:(void (^)(id <AFMultipartFormData> formData))block
     
 
    [self CIM_UploadFile:URLString RequestSerializer:nil parameters:setParameters constructingBodyWithBlock:block progress:nil success:^(NSURLSessionDataTask *task, id responseObject) {
-       [MBProgressHUD QW_hideHUD];
+       
        
        QW_ApiResponseParser *parser = [QW_ApiResponseParser QW_Parser:responseObject];
        if (parser) {
@@ -146,14 +145,14 @@ constructingBodyWithBlock:(void (^)(id <AFMultipartFormData> formData))block
        
    } failure:^(NSURLSessionDataTask *task, NSError *error) {
        
-       [MBProgressHUD QW_hideHUD];
+       
        BOOL isShowAlert=NO;
        
        if(connectfailure){
            connectfailure(&isShowAlert);
        }
        if (isShowAlert) {
-           [MBProgressHUD QW_showSingleMessage:@"服务器错误"];
+           
        }
        
    }];
@@ -350,7 +349,7 @@ RequestSerializer:(void(^)(AFHTTPRequestSerializer *aRequestSerializer,AFHTTPSes
     
     [self CIM_POST_22:URLString RequestSerializer:requestSerializer parameters:setParameters success:^(NSURLSessionDataTask *task, id responseObject) {
 
-        [MBProgressHUD QW_hideHUD];
+        
         QW_ApiResponseParser *parser = [QW_ApiResponseParser QW_Parser:responseObject];
         if (parser) {
             if (parser.resp_success) {
@@ -364,7 +363,7 @@ RequestSerializer:(void(^)(AFHTTPRequestSerializer *aRequestSerializer,AFHTTPSes
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         
-        [MBProgressHUD QW_hideHUD];
+        
         BOOL isShowAlert=NO;
         
         if(connectfailure){
@@ -372,7 +371,7 @@ RequestSerializer:(void(^)(AFHTTPRequestSerializer *aRequestSerializer,AFHTTPSes
         }
         if (isShowAlert) {
             //弹框显示网络错误
-            [MBProgressHUD QW_showSingleMessage:@"服务器错误"];
+            
         }
 
     }];

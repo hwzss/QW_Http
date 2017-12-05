@@ -25,7 +25,7 @@
         //请求到了，但是返回错误
         if([[responseObj objectForKey:@"status"] isEqualToString:@"err"]){
             parser.resp_success = NO;
-            parser.resp_erroStr = [responseObj objectForKey:@"errinfo"];
+            parser.resp_erroStr = [responseObj objectForKey:@"errInfo"];
         }else{
             NSLog(@"返回结果格式,本地解析失败");
         }
