@@ -63,3 +63,5 @@ fastlane/test_output
 iOSInjectionProject/
 *.xcuserstate
 *.xcuserstate
+*.xcuserstate
+QW_Http.xcworkspace/xcuserdata/qwkj.xcuserdatad/UserInterfaceState.xcuserstate
